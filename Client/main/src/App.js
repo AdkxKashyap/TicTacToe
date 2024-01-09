@@ -3,6 +3,7 @@ import './App.css';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import serverClient from './utils/StreamChat.js';
+import UserAuthContainer from './Components/UserAuthContainer.jsx';
 
 function App() {
   const cookies = new Cookies();
@@ -21,7 +22,7 @@ function App() {
   return (
     <div className="App">
 
-      <SignUp />
+      <UserAuthContainer />
 
     </div>
   );
