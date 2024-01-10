@@ -1,11 +1,14 @@
 import Cookies from 'universal-cookie';
 import './App.css';
-import Login from './Components/Login';
-import SignUp from './Components/SignUp';
 import serverClient from './utils/StreamChat.js';
 import UserAuthContainer from './Components/UserAuthContainer.jsx';
+import { useState } from 'react';
+import { Chat } from "stream-chat-react";
+import Game from './Components/Game.jsx';
+import JoinGame from './Components/JoinGame.jsx';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const cookies = new Cookies();
   const token = cookies.get("token");
   if (token) {
@@ -17,12 +20,29 @@ function App() {
       hashedPassword: cookies.get("hashedPassword"),
     },
       token
-    ).then((user) => console.log(user));
+    ).then((user) => setIsAuthenticated(true));
+  }
+  const handleLogOut = () => {
+    cookies.remove('token');
+    cookies.remove('userName');
+    cookies.remove('firstName');
+    cookies.remove('lastName');
+    cookies.remove('hashedPassword');
+    cookies.remove('userId');
+    serverClient.disconnectUser();
+    setIsAuthenticated(false);
   }
   return (
     <div className="App">
-
-      <UserAuthContainer />
+      {isAuthenticated ? (
+        <Chat client={serverClient} >
+          <JoinGame />
+          <button onClick={handleLogOut}>LogOut</button>
+          <Game />
+        </Chat>
+      ) :
+        <UserAuthContainer setIsAuth={setIsAuthenticated} />
+      }
 
     </div>
   );
