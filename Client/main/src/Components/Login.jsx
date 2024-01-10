@@ -5,7 +5,7 @@ import Axios from 'axios';
 import Cookies from 'universal-cookie';
 import { isStringEmpty, isNull } from '../utils/Common';
 
-const containerClasses = "flex p-6 flex-col basis-4 w-5/12 bg-blue-100 shadow-md";
+const containerClasses = "flex p-6 flex-col basis-4 w-5/12 shadow-md";
 const formFieldClasses = "mt-2 p-1.5 border border-solid border-sky-400 focus:outline-none focus:border-sky-600";
 const buttonClasses = "bg-cyan-500 shadow-lg hover:shadow-cyan-500/50 mt-1.5 transition ease-in duration-300";
 
@@ -33,7 +33,7 @@ const Login = ({ customClasses, setIsAuth }) => {
     setUser({ ...user, [field]: event.target.value });
   }
   return (
-    <div className={`${containerClasses} ${customClasses}`}>
+    <div className={`${containerClasses} ${customClasses} formCommon`}>
       <label>Login</label>
       <input
         placeholder='Username'

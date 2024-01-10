@@ -32,7 +32,7 @@ const SignUp = ({ setIsAuth }) => {
   }
   // TODO: add validations for button. Disable it
   return (
-    <div className={containerClasses}>
+    <div className={`${containerClasses} formCommon`}>
       <label>Sign Up</label>
       <input
         placeholder='Username'
