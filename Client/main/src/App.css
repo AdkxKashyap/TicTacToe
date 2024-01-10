@@ -23,6 +23,17 @@
     flex-direction: row;
 }
 
+.createGameContainer {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+    background-color: #5475cc;
+    box-shadow: 0px 0px 2px;
+}
+
 .square {
     flex: 33%;
     height: 100%;

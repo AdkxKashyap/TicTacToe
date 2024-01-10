@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useChatContext, Channel } from 'stream-chat-react';
 import Game from './Game';
 
+const formFieldClasses = "mt-2 p-1.5 w-6/12 bg-purple-600 border  border-blue-300 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500 transition duration-300 ease-in-out";
+const buttonClasses = "bg-cyan-500 p-2 w-4/12 shadow-lg hover:shadow-cyan-500/50 rounded-md mt-1.5 transition ease-in duration-300";
+const headerClasses = "text-5xl font-extrabold leading-tight";
 const JoinGame = () => {
     const [rivalUsername, setRivalUsername] = useState("");
     const [channel, setChannel] = useState(null);
@@ -28,13 +31,14 @@ const JoinGame = () => {
                 </Channel>
             ) :
                 (
-                    <div>
-                        <h4>Create Game</h4>
+                    <div className="createGameContainer">
+                        <h4 className={headerClasses}>Create Game</h4>
                         <input
                             placeholder='Username of rival...'
                             onChange={handleItemChange}
+                            className={formFieldClasses}
                         />
-                        <button onClick={createChannel}>Join Game</button>
+                        <button className={buttonClasses} onClick={createChannel}>Join Game</button>
                     </div>
                 )}
         </>
