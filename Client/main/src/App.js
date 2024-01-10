@@ -4,7 +4,6 @@ import serverClient from './utils/StreamChat.js';
 import UserAuthContainer from './Components/UserAuthContainer.jsx';
 import { useState } from 'react';
 import { Chat } from "stream-chat-react";
-import Game from './Components/Game.jsx';
 import JoinGame from './Components/JoinGame.jsx';
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
       hashedPassword: cookies.get("hashedPassword"),
     },
       token
-    ).then((user) => setIsAuthenticated(true));
+    ).then((user) => { setIsAuthenticated(true); console.log(user) });
   }
   const handleLogOut = () => {
     cookies.remove('token');
@@ -38,7 +37,6 @@ function App() {
         <Chat client={serverClient} >
           <JoinGame />
           <button onClick={handleLogOut}>LogOut</button>
-          <Game />
         </Chat>
       ) :
         <UserAuthContainer setIsAuth={setIsAuthenticated} />

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Axios from 'axios';
 import Cookies from 'universal-cookie';
 import UserInfo from '../Constants/UserInfo';
+import { isNull, isStringEmpty } from '../utils/Common.js';
 
 const containerClasses = "flex p-6 flex-col basis-4 w-5/12 bg-blue-100 shadow-md";
 const formFieldClasses = "mt-2 p-1.5 border border-solid border-sky-400 focus:outline-none focus:border-sky-600";
@@ -13,6 +14,9 @@ const SignUp = ({ setIsAuth }) => {
   const signup = () => {
     Axios.post(apiUrl, user).then(res => {
       const { token, userId, firstName, lastName, userName, hashedPassword } = res.data;
+      if (isNull(userId) || isStringEmpty(userName) || isStringEmpty(hashedPassword)) {
+        console.log("Sign Up failed");
+      }
       setIsAuth(true);
       cookies.set(UserInfo.TOKEN, token);
       cookies.set(UserInfo.USERID, userId);
@@ -20,7 +24,7 @@ const SignUp = ({ setIsAuth }) => {
       cookies.set(UserInfo.FIRSTNAME, firstName);
       cookies.set(UserInfo.LASTNAME, lastName);
       cookies.set(UserInfo.HASHEDPW, hashedPassword);
-    })
+    }).catch(err => console.log(err.response.data))
   }
 
   const handleItemChange = (field, event) => {

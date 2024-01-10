@@ -3,6 +3,7 @@ import { useState } from 'react';
 import UserInfo from '../Constants/UserInfo';
 import Axios from 'axios';
 import Cookies from 'universal-cookie';
+import { isStringEmpty, isNull } from '../utils/Common';
 
 const containerClasses = "flex p-6 flex-col basis-4 w-5/12 bg-blue-100 shadow-md";
 const formFieldClasses = "mt-2 p-1.5 border border-solid border-sky-400 focus:outline-none focus:border-sky-600";
@@ -16,6 +17,9 @@ const Login = ({ customClasses, setIsAuth }) => {
     Axios.post(apiUrl, user).then(res => {
       console.log("LoggedIn: ", res.data);
       const { token, userId, firstName, lastName, userName, hashedPassword } = res.data;
+      if (isNull(userId) || isStringEmpty(userName) || isStringEmpty(hashedPassword)) {
+        console.log("Login failed");
+      }
       setIsAuth(true);
       cookies.set(UserInfo.TOKEN, token);
       cookies.set(UserInfo.USERID, userId);
