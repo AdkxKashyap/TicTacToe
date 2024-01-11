@@ -4,9 +4,9 @@ import Cookies from 'universal-cookie';
 import UserInfo from '../Constants/UserInfo';
 import { isNull, isStringEmpty } from '../utils/Common.js';
 
-const containerClasses = "flex p-6 flex-col basis-4 w-5/12 bg-blue-100 shadow-md";
-const formFieldClasses = "mt-2 p-1.5 bg-purple-600 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-indigo-500";
-const buttonClasses = "bg-cyan-500 shadow-lg hover:shadow-cyan-500/50 mt-1.5 transition ease-in duration-300";
+const containerClasses = "flex p-6 flex-col basis-4 w-5/12";
+const formFieldClasses = "mt-2 p-1.5 bg-purple-200 rounded-md hover:bg-purple-300 focus:bg-purple-300 px-3 focus:outline-none focus:border-indigo-500 transition duration-300 ease-in-out";
+const buttonClasses = "bg-purple-500 rounded-md shadow-lg hover:shadow-purple-500/50 mt-1.5 transition ease-in duration-300";
 const SignUp = ({ setIsAuth }) => {
   const [user, setUser] = useState(null);
   const cookies = new Cookies();

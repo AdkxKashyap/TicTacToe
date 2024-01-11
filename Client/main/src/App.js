@@ -36,7 +36,7 @@ function App() {
       {isAuthenticated ? (
         <Chat client={serverClient} >
           <JoinGame />
-          <button onClick={handleLogOut}>LogOut</button>
+          {/* <button onClick={handleLogOut}>LogOut</button> */}
         </Chat>
       ) :
         <UserAuthContainer setIsAuth={setIsAuthenticated} />

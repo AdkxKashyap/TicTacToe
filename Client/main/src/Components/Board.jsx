@@ -1,15 +1,60 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Square from './Square'
 import { useChannelStateContext, useChatContext } from 'stream-chat-react';
+import { Patterns } from '../utils/WinningPatterns';
 import { isStringEmpty } from '../utils/Common';
+import PlayPiece from '../Constants/PlayPiece';
+import MatchState from '../Constants/MatchState';
+import PropTypes from 'prop-types';
 
-const Board = () => {
+const Board = ({ matchResult, setMatchResult }) => {
     const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
     const [currentPlayer, setCurrentPlayer] = useState("X");
+    const [turn, setTurn] = useState("X")
     const [showTurnMessage, setShowTurnMessage] = useState(false);
+
+    useEffect(() => {
+        checkWinner();
+        checkIfTie();
+    }, [board])
+
     const { channel } = useChannelStateContext();
     const { client } = useChatContext();
-    const [turn, setTurn] = useState(["X", "O"]);
+
+    const checkWinner = () => {
+        Patterns.forEach((pattern) => {
+            /** this will select the first symbol. eg if pattern[0] is 3,
+             this will give the symbol at board[3] and then we can check if that is winning symbol*/
+            const playSymbol = board[pattern[0]];
+            if (isStringEmpty(playSymbol)) return;
+            let foundWinner = true;
+            pattern.forEach(idx => {
+                if (board[idx] !== playSymbol) {
+                    foundWinner = false;
+                }
+            })
+            if (foundWinner) {
+                const res = {
+                    winner: playSymbol,
+                    state: MatchState.MATCH_WON,
+                }
+                setMatchResult(res);
+            }
+        })
+    }
+
+    const checkIfTie = () => {
+        let filled = true;
+        board.forEach((square) => {
+            if (square === "") {
+                filled = false;
+            }
+        });
+
+        if (filled) {
+            setMatchResult({ winner: "none", state: MatchState.MATCH_TIE });
+        }
+    };
 
     const updateBoard = (sqId, val) => {
         setBoard(prevBoard => {
@@ -20,37 +65,31 @@ const Board = () => {
             return newBoard;
         })
     }
-    const toggleTurn = () => {
-        setTurn(prevTurn => {
-            const cur = prevTurn.shift();
-            prevTurn.push(cur);
-            const newTurn = prevTurn;
-            return newTurn;
-        })
-    }
     const chooseSquare = async (squareId) => {
         //this chooses whose turn it is. The player at start of this array will get turn.
-        const playerTurn = turn[0];
-        if (playerTurn === currentPlayer && isStringEmpty(board[squareId])) {
-            //send game status to other player.
+        if (turn === currentPlayer && board[squareId] === "") {
+            setTurn(currentPlayer === PlayPiece.PIECE_X ? PlayPiece.PIECE_O : PlayPiece.PIECE_X);
+            setShowTurnMessage(false);
             await channel.sendEvent({
                 type: "game-move",
-                data: { squareId, currentPlayer, nextPlayer: turn[1] }
+                data: { squareId, currentPlayer },
             });
-            updateBoard(squareId, playerTurn);
-            toggleTurn()
-        };
+            updateBoard(squareId, currentPlayer);
+        }
     };
     channel.on((event) => {
         if (event.type === "game-move" && event.user.id !== client.userID) {
-            const { squareId, currentPlayer, nextPlayer } = event.data || {};
+            const { squareId, currentPlayer } = event.data || {};
+            const nextPlayer = currentPlayer === "X" ? "O" : "X";
             setCurrentPlayer(nextPlayer);
+            setTurn(nextPlayer);
             setShowTurnMessage(true);
             updateBoard(squareId, currentPlayer);
         }
     })
     return (
         <div className='boardContainer'>
+            {showTurnMessage ? (<span className='boardTurnMessage'>Its your turn!</span>) : null}
             <div className='board'>
                 <div className='row'>
                     <Square handleSquareClick={chooseSquare.bind(null, 0)} value={board[0]} />
@@ -68,10 +107,13 @@ const Board = () => {
                     <Square handleSquareClick={chooseSquare.bind(null, 8)} value={board[8]} />
                 </div>
             </div>
-            {showTurnMessage ? (<p>Its your turn</p>) : null}
         </div>
 
     )
 }
 
+Board.propTypes = {
+    matchResult: PropTypes.object.isRequired,
+    setMatchResult: PropTypes.func.isRequired,
+}
 export default Board
