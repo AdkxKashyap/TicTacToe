@@ -8,6 +8,9 @@ const loginRouter = new express.Router();
 loginRouter.post("/login", async (req, res) => {
     try {
         const { userName, password } = req.body || {};
+        if (isStringEmpty(userName) || isStringEmpty(password)) {
+            return res.status(401).json({ error: 'Username and password is required' });
+        }
         const { users } = await streamClient.queryUsers({ name: userName });
         if (users.length === 0) return res.status(404).json({ error: 'User not found' });
         const hashedPw = users[0].hashedPassword;

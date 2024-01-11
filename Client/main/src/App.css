@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('../public/wp4075975.jpg.webp');
 }
 
 .userStatusContainer {
@@ -91,3 +92,8 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
     color: #DAA520;
 }
+
+/* .errorText {
+    font-size: 10px;
+    color: crimson;
+} */
