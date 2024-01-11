@@ -52,7 +52,7 @@ const Game = ({ channel, setChannel }) => {
                         </div>
                     </>
                 ) :
-                    (<ResultComponent result={matchResult} />)
+                    (<ResultComponent result={matchResult} handleButtonClick={handleLeaveGameClick} />)
             }
         </div>
 
