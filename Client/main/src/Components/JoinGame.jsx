@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useChatContext, Channel } from 'stream-chat-react';
 import Game from './Game';
+import CustomInput from './CustomInput';
 
 const formFieldClasses = "mt-2 p-1.5 w-6/12 rounded-md py-2 bg-purple-200 hover:bg-purple-300 focus:bg-purple-300 px-3 focus:outline-none focus:border-indigo-500 transition duration-300 ease-in-out";
 const buttonClasses = "bg-purple-500 p-2 w-4/12 shadow-lg hover:shadow-purple-500/50 rounded-md mt-1.5 transition ease-in duration-300";
@@ -26,8 +27,11 @@ const JoinGame = () => {
     return (
         <>
             {channel ? (
-                <Channel channel={channel}>
-                    <Game channel={channel} />
+                <Channel channel={channel} Input={CustomInput}>
+                    <Game
+                        channel={channel}
+                        setChannel={setChannel}
+                    />
                 </Channel>
             ) :
                 (

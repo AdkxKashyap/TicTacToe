@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const ResultComponent = ({ result }) => {
     if (result == null || isStringEmpty(result.winner)) return;
     const winner = result.winner;
-    const resText = result.status === MatchState.MATCH_WON ? `${winner} won the game!` : "Game Tied :)";
+    const resText = result.state === MatchState.MATCH_WON ? `${winner} won the game!` : "Game Tied :)";
     return (
         <div className='resultComponent'>{resText}</div>
     )
@@ -15,7 +15,7 @@ const ResultComponent = ({ result }) => {
 ResultComponent.propTypes = {
     result: PropTypes.shape({
         winner: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
+        state: PropTypes.string.isRequired,
     })
 }
 export default ResultComponent

@@ -7,6 +7,15 @@
     align-items: center;
 }
 
+.userStatusContainer {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+}
+
 .board {
     width: 500px;
     height: 500px;

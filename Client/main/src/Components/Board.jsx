@@ -7,7 +7,7 @@ import PlayPiece from '../Constants/PlayPiece';
 import MatchState from '../Constants/MatchState';
 import PropTypes from 'prop-types';
 
-const Board = ({ matchResult, setMatchResult }) => {
+const Board = ({ setMatchResult, customBoardClasses }) => {
     const [board, setBoard] = useState(["", "", "", "", "", "", "", "", ""]);
     const [currentPlayer, setCurrentPlayer] = useState("X");
     const [turn, setTurn] = useState("X")
@@ -88,7 +88,7 @@ const Board = ({ matchResult, setMatchResult }) => {
         }
     })
     return (
-        <div className='boardContainer'>
+        <div className={`${customBoardClasses} boardContainer`}>
             {showTurnMessage ? (<span className='boardTurnMessage'>Its your turn!</span>) : null}
             <div className='board'>
                 <div className='row'>
@@ -113,7 +113,6 @@ const Board = ({ matchResult, setMatchResult }) => {
 }
 
 Board.propTypes = {
-    matchResult: PropTypes.object.isRequired,
     setMatchResult: PropTypes.func.isRequired,
 }
 export default Board

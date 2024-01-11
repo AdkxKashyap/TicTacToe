@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Chat } from "stream-chat-react";
 import JoinGame from './Components/JoinGame.jsx';
 
+const logoutButtonClasses = "bg-orange-500 text-white py-2 px-4 rounded";
+const loggedInText = "text-gray-600 mr-2";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const cookies = new Cookies();
@@ -19,7 +21,7 @@ function App() {
       hashedPassword: cookies.get("hashedPassword"),
     },
       token
-    ).then((user) => { setIsAuthenticated(true); console.log(user) });
+    ).then(() => { setIsAuthenticated(true); });
   }
   const handleLogOut = () => {
     cookies.remove('token');
@@ -36,7 +38,10 @@ function App() {
       {isAuthenticated ? (
         <Chat client={serverClient} >
           <JoinGame />
-          {/* <button onClick={handleLogOut}>LogOut</button> */}
+          <div className='userStatusContainer'>
+            <p className={loggedInText}>{`Logged in as: ${cookies.get('userName')}`}</p>
+            <button className={logoutButtonClasses} onClick={handleLogOut}>LogOut</button>
+          </div>
         </Chat>
       ) :
         <UserAuthContainer setIsAuth={setIsAuthenticated} />
