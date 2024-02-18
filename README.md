@@ -59,8 +59,6 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-<!-- Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `AdkxKashyap`, `TicTacToe`, `twitter_handle`, `adkx1010`, `gmail`, `akashdeepk619`, `jijivisha`, `jijivisha is social media web appliction where uses can share posts , make new friends , share their ideas and many more things.` -->
-
 
 
 ### Built With
@@ -165,4 +163,4 @@ Project Link: [https://github.com/AdkxKashyap/TicTacToe](https://github.com/Adkx
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [linkedin-url]: https://linkedin.com/in/adkx1010
-[product-screenshot]: https://i.ibb.co/bKTnD9q/XOs-Game-Image.png
+[product-screenshot]: https://i.ibb.co/f1XxQNQ/XOmaingame.png
