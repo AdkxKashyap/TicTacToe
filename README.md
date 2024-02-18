@@ -26,7 +26,7 @@
 <h3 align="center">XOs</h3>
 
   <p align="center">
-     XOs is an online multiplayer tic-tac-toe game where 2 players play against each other. Players can also interact with each other.
+     XOs is an online multiplayer tic-tac-toe game where 2 players play against each other with a built in chat service for interactive gameplay.
   </p>
 </div>
 
